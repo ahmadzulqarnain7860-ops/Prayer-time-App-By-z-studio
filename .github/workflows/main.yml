@@ -20,19 +20,13 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Download Missing Gradle Wrapper JAR
-      run: |
-        mkdir -p gradle/wrapper
-        curl -L -o gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.12.1/gradle/wrapper/gradle-wrapper.jar
+    # Setup standard Gradle in the runner instead of using a broken wrapper script
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
 
-    # FIX: Grant permission to BOTH the gradlew script AND the wrapper JAR file
-    - name: Grant execute permissions
-      run: |
-        chmod +x gradlew
-        chmod +x gradle/wrapper/gradle-wrapper.jar
-
+    # Build directly using the system's global gradle command
     - name: Build with Gradle
-      run: ./gradlew assembleDebug
+      run: gradle assembleDebug
 
     - name: Upload APK
       uses: actions/upload-artifact@v4

@@ -1,0 +1,6 @@
+{
+  "name": "Muscat Prayers",
+  "description": "Elegant prayer times in Muscat with custom notification alerts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -20,13 +20,15 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    # Setup standard Gradle in the runner instead of using a broken wrapper script
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
-    # Build directly using the system's global gradle command
+    # FIX: Run Gradle purely in headless mode to bypass desktop UI components
     - name: Build with Gradle
-      run: gradle assembleDebug
+      run: gradle assembleDebug --no-daemon -Djava.awt.headless=true
+      env:
+        JAVA_OPTS: "-Djava.awt.headless=true"
+        GRADLE_OPTS: "-Djava.awt.headless=true"
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
